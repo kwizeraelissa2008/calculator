@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scientific Calculator</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #1e1e1e;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .calculator {
+        width: 350px;
+        background: #2d2d2d;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 0 20px #000;
+      }
+      .display {
+        background: black;
+        color: lime;
+        font-size: 24px;
+        padding: 10px;
+        text-align: right;
+        border-radius: 5px;
+        height: 50px;
+        overflow-x: auto;
+      }
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+      }
+      button {
+        font-size: 18px;
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        background: #4b4b4b;
+        color: white;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background: #6d6d6d;
+      }
+      .wide {
+        grid-column: span 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <div class="display" id="display">0</div>
+      <div class="buttons">
+        <button onclick="clearDisplay()">AC</button>
+        <button onclick="deleteLast()">DEL</button>
+        <button onclick="appendOperator('(')">(</button>
+        <button onclick="appendOperator(')')">)</button>
+        <button onclick="appendOperator('/')">÷</button>
+
+        <button onclick="appendFunction('sin')">sin</button>
+        <button onclick="appendFunction('cos')">cos</button>
+        <button onclick="appendFunction('tan')">tan</button>
+        <button onclick="appendFunction('log')">log</button>
+        <button onclick="appendOperator('*')">×</button>
+
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button onclick="appendOperator('-')">−</button>
+        <button onclick="appendFunction('sqrt')">√</button>
+
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button onclick="appendOperator('+')">+</button>
+        <button onclick="appendOperator('**')">^</button>
+
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button onclick="appendConstant('Math.PI')">π</button>
+        <button onclick="appendConstant('Math.E')">e</button>
+
+        <button onclick="appendNumber('0')">0</button>
+        <button onclick="appendNumber('.')">.</button>
+        <button class="wide" onclick="calculateResult()">=</button>
+      </div>
+    </div>
+
+    <script>
+      let display = document.getElementById("display");
+
+      function clearDisplay() {
+        display.textContent = "0";
+      }
+
+      function deleteLast() {
+        display.textContent = display.textContent.slice(0, -1) || "0";
+      }
+
+      function appendNumber(num) {
+        if (display.textContent === "0") {
+          display.textContent = num;
+        } else {
+          display.textContent += num;
+        }
+      }
+
+      function appendOperator(op) {
+        display.textContent += op;
+      }
+
+      function appendFunction(func) {
+        display.textContent += `Math.${func}(`;
+      }
+
+      function appendConstant(constant) {
+        display.textContent += constant;
+      }
+
+      function calculateResult() {
+        try {
+          const result = eval(display.textContent);
+          display.textContent = result;
+        } catch (e) {
+          display.textContent = "Error";
+        }
+      }
+    </script>
+  </body>
+</html>
